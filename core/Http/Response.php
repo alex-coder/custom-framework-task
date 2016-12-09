@@ -26,7 +26,7 @@
          * @param int   $code
          * @param array $headers
          */
-        public function __construct(IView $view, $code = 200, $headers = [])
+        public function __construct(IView $view, $code = 200, array $headers = [])
         {
             $this->code    = (int) $code;
             $this->view    = $view;

@@ -42,16 +42,21 @@
         /**
          * Render the given template
          * @return string
+         * @throws \ErrorException
          */
         public function render()
         {
-            ob_start();
+            if (is_readable($this->file)) {
+                ob_start();
 
-            require_once $this->file;
+                require_once $this->file;
 
-            $rendered = ob_get_contents();
-            ob_clean();
+                $rendered = ob_get_contents();
+                ob_clean();
 
-            return $rendered;
+                return $rendered;
+            }
+
+            throw new \ErrorException("Template {$this->file} not found");
         }
     }
