@@ -6,6 +6,7 @@
 
     use Core\Http\Request;
     use Core\Http\Response;
+    use Core\Http\ResponseFactory;
 
     class Router
     {
@@ -93,7 +94,7 @@
                 }
             }
             if (!$response) {
-                echo "404";
+                $response = ResponseFactory::notFound();
             }
 
             $this->sendResponse($response);

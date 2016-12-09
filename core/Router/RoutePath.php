@@ -68,8 +68,8 @@
         {
             $regexp = $uri;
             if (preg_match_all('/\{([^\}]*)\}/', $uri, $matches)) {
-                $regexp = str_replace($matches[0], '([^\)]+)', $uri);
+                $regexp = str_replace($matches[0], '([^/]+)', $uri);
             }
-            $this->regexp = "@{$regexp}@";
+            $this->regexp = "@^{$regexp}$@";
         }
     }

@@ -11,6 +11,6 @@
     {
         public function show($id)
         {
-            return ResponseFactory::notFound();
+            return ResponseFactory::json($id);
         }
     }
