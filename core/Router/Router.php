@@ -8,8 +8,11 @@
 
     class Router
     {
-        const METHOD_GET  = 'GET';
-        const METHOD_POST = 'POST';
+        const METHOD_GET    = 'GET';
+        const METHOD_POST   = 'POST';
+        const METHOD_PUT    = 'PUT';
+        const METHOD_DELETE = 'DELETE';
+
         /** @var Route[] */
         private $routes = [];
 
@@ -48,6 +51,28 @@
         }
 
         /**
+         * Bind PUT request
+         *
+         * @param string $path
+         * @param string $actionString
+         */
+        public function put($path, $actionString)
+        {
+            $this->bind(static::METHOD_PUT, $path, $actionString);
+        }
+
+        /**
+         * Bind DELETE request
+         *
+         * @param string $path
+         * @param string $actionString
+         */
+        public function delete($path, $actionString)
+        {
+            $this->bind(static::METHOD_DELETE, $path, $actionString);
+        }
+
+        /**
          * Start router
          *
          * @param Request $request
@@ -60,7 +85,7 @@
                     $action = $route->getAction();
 
                     $controller = new $class($request);
-                    $result     = call_user_func_array([$controller, $action], []);
+                    $result     = call_user_func_array([$controller, $action], $route->getPath()->getRouteParams());
                     var_export($result);
 
                     return;

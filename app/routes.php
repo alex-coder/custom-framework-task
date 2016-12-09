@@ -10,9 +10,10 @@
      * Uri string may have params:
      *      `/user/{id}/info`
      *      `/user/{name}`
+     * Params will be passed to the method in same order
      */
-    $router->get('/welcome', 'application#index');
-    $router->get('/user/{id}/{name}', 'application#index');
+    $router->get('/welcome', 'users#index');
+    $router->get('/user/{id}/{name}', 'users#index');
 
     return $router;
 
