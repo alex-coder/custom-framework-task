@@ -5,6 +5,7 @@
 
 
     use Core\Http\Request;
+    use Core\Http\Response;
 
     class Router
     {
@@ -79,19 +80,40 @@
          */
         public function start(Request $request)
         {
+            $response = null;
             foreach ($this->routes as $route) {
                 if ($route->getPath()->match($request)) {
                     $class  = $route->getControllerClass();
                     $action = $route->getAction();
+                    $params = $route->getPath()->getRouteParams();
 
-                    $controller = new $class($request);
-                    $result     = call_user_func_array([$controller, $action], $route->getPath()->getRouteParams());
-                    var_export($result);
+                    $response = call_user_func_array([new $class($request), $action], $params);
 
-                    return;
+                    break;
                 }
             }
+            if (!$response) {
+                echo "404";
+            }
 
-            echo "404";
+            $this->sendResponse($response);
+        }
+
+        /**
+         * Send response to client
+         *
+         * @param Response $response
+         *
+         * @void
+         */
+        private function sendResponse(Response $response)
+        {
+            http_response_code($response->getCode());
+
+            foreach ($response->getHeaders() as $key => $value) {
+                header("{$key}: {$value}");
+            }
+
+            print $response->getView()->render();
         }
     }

@@ -5,11 +5,15 @@
 
 
     use Core\Http\Controller;
+    use Core\Http\Response;
+    use Core\View\Json;
 
     class UsersController extends Controller
     {
-        public function index()
+        public function show($id)
         {
-            return func_get_args();
+            $view = new Json(['id' => $id]);
+
+            return new Response($view);
         }
     }

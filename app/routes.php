@@ -12,8 +12,7 @@
      *      `/user/{name}`
      * Params will be passed to the method in same order
      */
-    $router->get('/welcome', 'users#index');
-    $router->get('/user/{id}/{name}', 'users#index');
+    $router->get('/user/{id}', 'users#show');
 
     return $router;
 
