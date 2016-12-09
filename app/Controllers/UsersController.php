@@ -11,6 +11,6 @@
     {
         public function show($id)
         {
-            return ResponseFactory::json($id);
+            return ResponseFactory::view('users.show', ['id' => $id]);
         }
     }
