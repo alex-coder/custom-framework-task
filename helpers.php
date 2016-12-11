@@ -8,7 +8,7 @@
      */
     function root_path($postfix = '')
     {
-        $root    = __DIR__;
+        $root = __DIR__;
         $postfix = trim($postfix, '/');
         if (!empty($postfix)) {
             $root .= DIRECTORY_SEPARATOR . $postfix;
@@ -54,24 +54,64 @@
     }
 
     /**
-     * @param string $key
-     * @param mixed  $default
+     * Returns path to uploads directory
      *
-     * @return mixed
+     * @param string $postfix
+     *
+     * @return string
      */
-    function config($key, $default)
+    function uploads_path($postfix = '')
     {
-        $config = require_once app_path('config.php');
-        $keys   = explode('.', $key);
+        return public_path('uploads') . DIRECTORY_SEPARATOR . trim($postfix, DIRECTORY_SEPARATOR);
+    }
 
-        $last = $config;
-        foreach ($keys as $k) {
-            if (array_key_exists($k, $last)) {
-                $last = $last[ $k ];
-            } else {
-                return $default;
-            }
-        }
+    /**
+     * Returns uploads uri path
+     *
+     * @param string $postfix
+     *
+     * @return string
+     */
+    function uploads_uri($postfix = '')
+    {
+        return "/uploads/" . ltrim($postfix, '/');
+    }
 
-        return $last;
+    /**
+     * Returns path to log dir
+     *
+     * @param string $postfix
+     *
+     * @return string
+     */
+    function logs_path($postfix = '')
+    {
+        return root_path('log' . DIRECTORY_SEPARATOR . trim($postfix, DIRECTORY_SEPARATOR));
+    }
+
+    /**
+     * Log debug to file
+     *
+     * @param string $message
+     *
+     * @return int
+     */
+    function debug($message)
+    {
+        $file = logs_path('runtime.log');
+        $message = date('d-m-Y H:i:s') . ' ' . $message . PHP_EOL;
+
+        return file_put_contents($file, $message, FILE_APPEND) > 0;
+    }
+
+    /**
+     * Returns sessions path
+     *
+     * @param string $postfix
+     *
+     * @return string
+     */
+    function session_path($postfix = '')
+    {
+        return root_path('sessions' . DIRECTORY_SEPARATOR . trim($postfix, DIRECTORY_SEPARATOR));
     }

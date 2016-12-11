@@ -12,7 +12,18 @@
      *      `/user/{name}`
      * Params will be passed to the method in same order
      */
-    $router->get('/user/{id}', 'users#show');
+
+    $router->get('/', 'reviews#index');
+    $router->post('/', 'reviews#create');
+
+    $router->get('/admin', 'admin#index');
+    $router->get('/admin/approve/{id}', 'admin#approve');
+    $router->get('/admin/decline/{id}', 'admin#decline');
+    $router->get('/admin/{id}', 'admin#edit');
+    $router->post('/admin/{id}', 'admin#save');
+
+    $router->get('/login', 'login#index');
+    $router->post('/login', 'login#login');
 
     return $router;
 

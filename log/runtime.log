@@ -1,0 +1,21 @@
+10-12-2016 12:36:37 Create review: INSERT INTO reviews SET name = ?, email = ?, text = ?, image_name = ? ["qrw","admin@admin.com","tetet","ce029018b7fca8f233044494c1ac9018.png"]
+10-12-2016 12:37:28 Create review: INSERT INTO reviews SET name = ?, email = ?, text = ?, image = ? ["qrw","admin@admin.com","tetet","d0957e35be45eb22bdd05539de3db3ae.png"]
+10-12-2016 12:44:05 IW: 1280
+10-12-2016 12:44:05 IH: 1024
+10-12-2016 12:44:05 DW: 960
+10-12-2016 12:44:05 DH: 784
+10-12-2016 12:44:05 Create review: INSERT INTO reviews SET name = ?, email = ?, text = ?, image = ? ["qwe","alex.coder1@gmail.ru","1615","b4353b60a4b8aa2660bd472e954068b2.png"]
+10-12-2016 12:49:04 IW: 1280
+10-12-2016 12:49:04 IH: 1024
+10-12-2016 12:49:04 DW: 960
+10-12-2016 12:49:04 DH: 784
+10-12-2016 12:49:04 Resize by height: 240
+10-12-2016 12:49:04 Create review: INSERT INTO reviews SET name = ?, email = ?, text = ?, image = ? ["qwedq","alex.coder1@gmail.com","qwfa","986d816071a70d56c0a98bd711dff3bd.png"]
+10-12-2016 12:50:02 IW: 466
+10-12-2016 12:50:02 IH: 320
+10-12-2016 12:50:02 DW: 146
+10-12-2016 12:50:02 DH: 80
+10-12-2016 12:50:02 Resize by height: 240
+10-12-2016 12:50:02 Create review: INSERT INTO reviews SET name = ?, email = ?, text = ?, image = ? ["qfwf","qfwqwf@asfaf.af","asfasf","3efce2b198a1da3209344743c56dc45f.jpg"]
+10-12-2016 13:00:12 Create review: INSERT INTO reviews SET name = ?, email = ?, text = ?, image = ? ["sfasf","alex.coder1@gmail.com","jkjb","45d93f44e1cf54b0e28f28402ac7491e.jpg"]
+10-12-2016 13:48:28 Create review: INSERT INTO reviews SET name = ?, email = ?, text = ?, image = ? ["asfasf","alex.coder1@gmail.com","afsasfasfa","5444cef68b7bde13d966db309159cbfc.jpg"]

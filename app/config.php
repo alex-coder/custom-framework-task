@@ -1,11 +1,16 @@
 <?php
     return [
+        'admin' => [
+            'login'    => 'admin',
+            'password' => '123',
+        ],
+
         'database' => [
             'driver'   => 'mysql',
             'host'     => 'localhost',
-            'database' => 'test',
+            'database' => 'beejee',
             'user'     => 'root',
-            'password' => 'root',
-            'charset'  => 'utf-8',
+            'password' => 'NMusiCL1!',
+            'charset'  => 'utf8',
         ],
     ];

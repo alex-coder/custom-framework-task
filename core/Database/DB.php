@@ -4,42 +4,116 @@
     namespace Core\Database;
 
 
+    use Core\Config;
     use PDO;
 
     class DB
     {
-        /** @var DB */
-        protected static $instance;
-
         /** @var PDO */
-        protected $connection;
+        protected static $connection;
 
         /**
-         * DB constructor.
+         * Get array from db
+         *
+         * @param string $sql
+         * @param string $fetchClass
+         * @param array $params
+         *
+         * @return array
          */
-        protected function __construct()
+        public static function fetchArray($sql, $fetchClass, array $params = [])
         {
-            $driver   = config('database.driver', 'mysql');
-            $host     = config('database.host', '');
-            $user     = config('database.user', '');
-            $database = config('database.database', '');
-            $password = config('database.password', '');
-            $charset  = config('database.charset', '');
+            $statement = static::getConnection()->prepare($sql);
+            $statement->execute($params);
 
-            $uri              = "{$driver}:host={$host};dbname={$database};charset={$charset}";
-            $this->connection = new PDO($uri, $user, $password);
+            if (!$statement) {
+                return [];
+            }
+
+            return $statement->fetchAll(PDO::FETCH_CLASS, $fetchClass);
         }
 
         /**
          * Getting PDO instance
-         * @return DB
+         *
+         * @return PDO
          */
-        public static function getInstance()
+        public static function getConnection()
         {
-            if (!static::$instance) {
-                static::$instance = new static();
+            if (!static::$connection) {
+                static::$connection = static::createConnection();
             }
 
-            return static::$instance;
+            return static::$connection;
+        }
+
+        /**
+         * DB constructor.
+         */
+        protected static function createConnection()
+        {
+            $driver = Config::get('database.driver', 'mysql');
+            $host = Config::get('database.host', '');
+            $user = Config::get('database.user', '');
+            $database = Config::get('database.database', '');
+            $password = Config::get('database.password', '');
+            $charset = Config::get('database.charset', '');
+
+            $uri = "{$driver}:host={$host};dbname={$database};charset={$charset}";
+
+            return new PDO($uri, $user, $password);
+        }
+
+        /**
+         * Returns one record from database
+         *
+         * @param string $sql
+         * @param string $fetchClass
+         * @param array $params
+         *
+         * @return mixed
+         */
+        public static function fetchOne($sql, $fetchClass, array $params = [])
+        {
+            $statement = static::getConnection()->prepare($sql);
+            $statement->execute($params);
+
+            if (!$statement) {
+                return null;
+            }
+
+            $statement->setFetchMode(PDO::FETCH_CLASS, $fetchClass);
+
+            return $statement->fetch();
+        }
+
+        /**
+         * Insert new record
+         *
+         * @param string $sql
+         * @param array $params
+         *
+         * @return bool
+         */
+        public static function insert($sql, array $params = [])
+        {
+            $statement = static::getConnection()->prepare($sql);
+
+            return $statement->execute($params);
+        }
+
+        /**
+         * Updating record
+         *
+         * @param string $sql
+         * @param array $params
+         *
+         * @return bool
+         */
+        public static function update($sql, array $params)
+        {
+            $statement = static::getConnection()->prepare($sql);
+
+            return $statement->execute($params);
         }
     }

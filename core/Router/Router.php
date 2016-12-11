@@ -10,13 +10,24 @@
 
     class Router
     {
-        const METHOD_GET    = 'GET';
-        const METHOD_POST   = 'POST';
-        const METHOD_PUT    = 'PUT';
+        const METHOD_GET = 'GET';
+        const METHOD_POST = 'POST';
+        const METHOD_PUT = 'PUT';
         const METHOD_DELETE = 'DELETE';
 
         /** @var Route[] */
         private $routes = [];
+
+        /**
+         * Bind GET request
+         *
+         * @param string $path
+         * @param string $actionString
+         */
+        public function get($path, $actionString)
+        {
+            $this->bind(static::METHOD_GET, $path, $actionString);
+        }
 
         /**
          * Bind new request
@@ -28,17 +39,6 @@
         public function bind($method, $path, $actionString)
         {
             $this->routes[] = new Route($method, $path, $actionString);
-        }
-
-        /**
-         * Bind GET request
-         *
-         * @param string $path
-         * @param string $actionString
-         */
-        public function get($path, $actionString)
-        {
-            $this->bind(static::METHOD_GET, $path, $actionString);
         }
 
         /**
@@ -84,12 +84,11 @@
             $response = null;
             foreach ($this->routes as $route) {
                 if ($route->getPath()->match($request)) {
-                    $class  = $route->getControllerClass();
+                    $class = $route->getControllerClass();
                     $action = $route->getAction();
                     $params = $route->getPath()->getRouteParams();
 
                     $response = call_user_func_array([new $class($request), $action], $params);
-
                     break;
                 }
             }
@@ -115,6 +114,8 @@
                 header("{$key}: {$value}");
             }
 
-            print $response->getView()->render();
+            if ($response->hasView()) {
+                print $response->getView()->render();
+            }
         }
     }

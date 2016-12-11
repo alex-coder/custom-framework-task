@@ -30,6 +30,22 @@
         }
 
         /**
+         * Parse uri to url params
+         *
+         * @param string $uri
+         *
+         * @void
+         */
+        private function parseUri($uri)
+        {
+            $regexp = $uri;
+            if (preg_match_all('/\{([^\}]*)\}/', $uri, $matches)) {
+                $regexp = str_replace($matches[0], '([^/]+)', $uri);
+            }
+            $this->regexp = "@^{$regexp}$@";
+        }
+
+        /**
          * @param Request $request
          *
          * @return boolean
@@ -39,7 +55,7 @@
             $method = $request->getMethod();
             $uri    = $request->getUri();
 
-            if ($this->method !== $method || !preg_match_all($this->regexp, $uri, $matches, PREG_PATTERN_ORDER)) {
+            if ($this->method !== $method || !preg_match_all($this->regexp, $uri, $matches)) {
                 return false;
             }
 
@@ -55,21 +71,5 @@
         public function getRouteParams()
         {
             return $this->params;
-        }
-
-        /**
-         * Parse uri to url params
-         *
-         * @param string $uri
-         *
-         * @void
-         */
-        private function parseUri($uri)
-        {
-            $regexp = $uri;
-            if (preg_match_all('/\{([^\}]*)\}/', $uri, $matches)) {
-                $regexp = str_replace($matches[0], '([^/]+)', $uri);
-            }
-            $this->regexp = "@^{$regexp}$@";
         }
     }

@@ -15,20 +15,26 @@
         /** @var array */
         protected $get = [];
 
+        /** @var array */
+        protected $files = [];
+
         /** @var string */
         protected $method;
 
         /**
          * Build request object from globals
+         *
          * @return Request
          */
         public static function build()
         {
             $instance = new static();
 
-            $instance->uri    = $_SERVER['REQUEST_URI'];
-            $instance->post   = $_POST;
-            $instance->get    = $_GET;
+            list($uri) = explode('?', $_SERVER['REQUEST_URI']);
+            $instance->uri = $uri ?: '/';
+            $instance->post = $_POST;
+            $instance->get = $_GET;
+            $instance->files = $_FILES;
             $instance->method = $_SERVER['REQUEST_METHOD'];
 
             return $instance;
@@ -36,6 +42,7 @@
 
         /**
          * Returns uri string
+         *
          * @return string
          */
         public function getUri()
@@ -47,35 +54,13 @@
          * Returns POST param from request
          *
          * @param string $key
-         * @param mixed  $default
+         * @param mixed $default
          *
          * @return mixed
          */
         public function paramPost($key, $default = null)
         {
             return array_key_exists($key, $this->post) ? $this->clean($this->post[ $key ]) : $default;
-        }
-
-        /**
-         * Returns GET param from request
-         *
-         * @param string $key
-         * @param mixed  $default
-         *
-         * @return mixed
-         */
-        public function paramGet($key, $default = null)
-        {
-            return array_key_exists($key, $this->get) ? $this->clean($this->get[ $key ]) : $default;
-        }
-
-        /**
-         * Returns HTTP method
-         * @return string
-         */
-        public function getMethod()
-        {
-            return $this->method;
         }
 
         /**
@@ -92,5 +77,41 @@
             }
 
             return trim($value);
+        }
+
+        /**
+         * Returns GET param from request
+         *
+         * @param string $key
+         * @param mixed $default
+         *
+         * @return mixed
+         */
+        public function paramGet($key, $default = null)
+        {
+            return array_key_exists($key, $this->get) ? $this->clean($this->get[ $key ]) : $default;
+        }
+
+        /**
+         * Returns file param by key
+         *
+         * @param string $key
+         * @param mixed $default
+         *
+         * @return mixed
+         */
+        public function paramFile($key, $default = null)
+        {
+            return array_key_exists($key, $this->files) && $this->files[ $key ]['size'] > 0 ? $this->files[ $key ] : $default;
+        }
+
+        /**
+         * Returns HTTP method
+         *
+         * @return string
+         */
+        public function getMethod()
+        {
+            return $this->method;
         }
     }
