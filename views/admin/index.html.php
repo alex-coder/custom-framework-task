@@ -27,7 +27,7 @@
             <td><?php echo $review->text; ?></td>
             <td>
                 <?php if ($review->hasImage()) : ?>
-                    <img width="120" src="/uploads/<?php echo $review->image; ?>">
+                    <img width="120" src="<?php echo uploads_uri($review->image); ?>">
                 <?php endif; ?>
             </td>
             <td width="100">
@@ -44,5 +44,5 @@
         </tr>
     <?php endforeach; ?>
 </table>
-<script src="/js/admin.js"></script>
+<script src="/public/js/admin.js"></script>
 <?php require_once views_path('footer.html.php'); ?>

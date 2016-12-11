@@ -29,7 +29,7 @@
             <div class="form - group">
                 <label for="image">Фото</label>
                 <?php if ($this->review->hasImage()) : ?>
-                    <img src="/uploads/<?php echo $this->review->image; ?>" width="100">
+                    <img src="<?php echo uploads_uri($this->review->image); ?>" width="100">
                 <?php else: ?>
                     <div class="text-muted">Нет</div>
                 <?php endif; ?>

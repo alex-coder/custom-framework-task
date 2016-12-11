@@ -74,7 +74,7 @@
      */
     function uploads_uri($postfix = '')
     {
-        return "/uploads/" . ltrim($postfix, '/');
+        return '/public/uploads/' . ltrim($postfix, '/');
     }
 
     /**

@@ -93,5 +93,5 @@
     </div>
     <br>
 
-    <script src="/js/preview.js"></script>
+    <script src="/public/js/preview.js"></script>
 <?php require_once views_path('footer.html.php'); ?>
