@@ -24,7 +24,7 @@
             $sessionFile = session_path('admin.session');
             $token = file_get_contents($sessionFile);
 
-            return $token === $_COOKIE['session'];
+            return array_key_exists('session', $_COOKIE) && $token === $_COOKIE['session'];
         }
 
         public function edit($id)
